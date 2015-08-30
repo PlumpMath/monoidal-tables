@@ -27,14 +27,14 @@ the desired operation.
 ## Example
 
 ```python
-    from operator import itemgetter
-    table = (integer('X', itemgetter('x')) +
-             integer('Y', itemgetter('y')) +
-             string('Name', itemgetter('name')))
-    data = [
-        {'x': 0, 'y': 0, 'name': 'Origin'},
-        {'x': 5, 'y': 5, 'name': 'Diagonal'},
-        {'x': 2, 'y': 8, 'name': 'Up'},
-    ]
-    table.render(data, renderer=FancyRenderer)
+from operator import itemgetter
+table = (integer('X', itemgetter('x')) +
+         integer('Y', itemgetter('y')) +
+         string('Name', itemgetter('name')))
+data = [
+    {'x': 0, 'y': 0, 'name': 'Origin'},
+    {'x': 5, 'y': 5, 'name': 'Diagonal'},
+    {'x': 2, 'y': 8, 'name': 'Up'},
+]
+table.render(data, renderer=FancyRenderer)
 ```
