@@ -95,40 +95,58 @@ class Column(object):
         return max(data_max, len(self.header))
 
 
-def singleton(header, getter):
-    return Table(columns=(Column(header, getter), ))
-
-
-def typed_column(header, getter, type):
+def column(header, getter):
+    """
+    Create table consisting of a single column. The getter must return a
+    string-like value, else TypeError will be raised.
+    """
     def better_getter(x):
         value = getter(x)
         if value is None:
             return ''
-        if not isinstance(value, type):
+        if not isinstance(value, basestring):
             raise TypeError(
-                'Column {col}: {data} is not {type}'.format(
-                    col=header, data=value, type=str(type)))
-        return str(value)
-    return singleton(header, better_getter)
+                'Column {col}: {data} is not a string.'.format(
+                    col=header, data=value))
+        return value
+    return Table(columns=(Column(header, getter), ))
 
 
-def integer(header, getter):
-    return typed_column(header, getter, int)
+def stringable(header, getter):
+    """
+    Create a table consisting of a single column. The getter must return a
+    value that can be converted to string with the ``str()``
+    """
+    def wrapped_getter(x):
+        return str(getter(x))
+    return column(header, wrapped_getter)
 
 
-def string(header, getter):
-    return typed_column(header, getter, basestring)
+def boolean(header, getter, mapping=None):
+    """
+    Create a table consisting of a single column. The getter must return a
+    boolean which is converted to string based on the mapping provided as
+    optional argument. The default is simply ``"True"`` and ``"False"``.
 
+    :param mapping: Dict mapping booleans to strings.
+    """
+    mapping = mapping or {True: 'True', False: 'False'}
 
-def boolean(header, getter):
-    return typed_column(header, getter, bool)
+    def wrapped_getter(x):
+        value = getter(x)
+        if not isinstance(value, bool):
+            raise TypeError(
+                'Column {col}: {data} is not a bool.'.format(
+                    col=header, data=value))
+        return mapping[x]
+    return column(header, wrapped_getter)
 
 
 if __name__ == '__main__':
     from operator import itemgetter
-    table = (integer('X', itemgetter('x')) +
-             integer('Y', itemgetter('y')) +
-             string('Name', itemgetter('name')))
+    table = (stringable('X', itemgetter('x')) +
+             stringable('Y', itemgetter('y')) +
+             column('Name', itemgetter('name')))
     data = [
         {'x': 0, 'y': 0, 'name': 'Origin'},
         {'x': 5, 'y': 5, 'name': 'Diagonal'},
