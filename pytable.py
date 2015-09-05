@@ -135,4 +135,3 @@ if __name__ == '__main__':
         {'x': 2, 'y': 8, 'name': 'Up'},
     ]
     table.render(data, renderer=FancyRenderer)
-
