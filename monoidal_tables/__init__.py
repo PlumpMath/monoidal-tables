@@ -85,6 +85,9 @@ def align_center(table):
 def set_class(table, cls):
     """
     Creates a new table with the same columns as the given table. All columns
-    in new table will have given HTML classes. This only works for HTML output.
+    in new table will have given HTML classes. This class will be added to
+    table cells, both ``th`` and ``td`.
+
+    This only works for HTML output.
     """
-    return types.set_attr(table, 'class', cls)
+    return types.set_attr(table, constants.HTML_CLASS_KEY, cls)

@@ -43,10 +43,11 @@ class FancyRenderer(BaseRenderer):
 
 
 class HtmlRenderer(BaseRenderer):
-    def tag(self, elem):
+    def tag(self, elem, cls=None):
         class TagWrapper(object):
             def __enter__(_):
-                self.p('<{}>'.format(elem))
+                attr = ' class="{}"'.format(cls) if cls else ''
+                self.p('<{}{}>'.format(elem, attr))
 
             def __exit__(_, type, value, traceback):
                 self.p('</{}>'.format(elem))
@@ -54,18 +55,21 @@ class HtmlRenderer(BaseRenderer):
         return TagWrapper()
 
     def render(self, data):
+        cols = self.table.columns
+        attrs = [c.attrs.get(constants.HTML_CLASS_KEY) for c in cols]
         with self.tag('table'):
             with self.tag('thead'):
-                self.print_row([c.header for c in self.table.columns],
-                               tag='th')
+                self.print_row([c.header for c in cols],
+                               attrs, tag='th')
             with self.tag('tbody'):
                 for row in data:
-                    self.print_row([c.cell(row) for c in self.table.columns])
+                    self.print_row([c.cell(row) for c in cols], attrs)
 
-    def print_row(self, values, tag='td'):
+    def print_row(self, values, attrs, tag='td'):
         with self.tag('tr'):
-            map(lambda v: self.print_cell(v, tag=tag), values)
+            for (val, cls) in zip(values, attrs):
+                self.print_cell(val, tag=tag, cls=cls)
 
-    def print_cell(self, value, tag):
-        with self.tag(tag):
+    def print_cell(self, value, tag, cls=None):
+        with self.tag(tag, cls=cls):
             self.p(value)
