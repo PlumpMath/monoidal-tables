@@ -58,7 +58,8 @@ def boolean(header, getter, mapping=None):
 def align_left(table):
     """
     Creates a new table with the same columns as the given table. All columns
-    in new table are left aligned.
+    in new table are left aligned. This attribute is only applicable to textual
+    output.
     """
     return types.set_attr(table, constants.ALIGN_KEY, constants.ALIGN_LEFT)
 
@@ -66,7 +67,8 @@ def align_left(table):
 def align_right(table):
     """
     Creates a new table with the same columns as the given table. All columns
-    in new table are right aligned.
+    in new table are right aligned. This attribute is only applicable to
+    textual output.
     """
     return types.set_attr(table, constants.ALIGN_KEY, constants.ALIGN_RIGHT)
 
@@ -74,7 +76,8 @@ def align_right(table):
 def align_center(table):
     """
     Creates a new table with the same columns as the given table. All columns
-    in new table are center aligned.
+    in new table are center aligned. This attribute is only applicable to
+    textual output.
     """
     return types.set_attr(table, constants.ALIGN_KEY, constants.ALIGN_CENTER)
 
