@@ -10,7 +10,7 @@ from monoidal_tables import renderers
 
 if __name__ == '__main__':
     table = (mt.integer('X', itemgetter('x')) +
-             mt.integer('Y', itemgetter('y')) +
+             mt.set_class(mt.integer('Y', itemgetter('y')), 'col-y') +
              mt.align_center(mt.column('Name', itemgetter('name'))))
     data = [
         {'x': 0, 'y': 0, 'name': 'Origin'},
