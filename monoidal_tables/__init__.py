@@ -93,5 +93,9 @@ def set_class(table, cls):
     table cells, both ``th`` and ``td`.
 
     This only works for HTML output.
+
+    :param cls: the classes you want to set, you can specify multiple classes
+                separated by spaces
+    :paramtype cls: string
     """
     return types.set_attr(table, constants.HTML_CLASS_KEY, cls)
