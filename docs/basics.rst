@@ -1,7 +1,7 @@
 Basic Usage
 ===========
 
-The general patter when using *Monoidal Tables* is that first you define what
+The general pattern when using *Monoidal Tables* is that first you define what
 columns your table should contain. Then you feed the table with data and obtain
 properly formatted output.
 
@@ -24,5 +24,5 @@ If you want to customize the output, there are functions that set attributes on
 the tables such as column alignment. Please note though that not all attributes
 make sense for all renderers. Extra attributes are ignores.
 
-It is perfectly ok to reuse the same table blueprint multiple times with
-different data sets.
+It is perfectly acceptable to reuse the same table blueprint multiple times
+with different data sets.
