@@ -32,6 +32,10 @@ def stringable(header, getter):
 
 
 def integer(header, getter):
+    """
+    This function behaves just like ``stringable``, except it sets right
+    alignment on textual output by default.
+    """
     return align_right(stringable(header, getter))
 
 

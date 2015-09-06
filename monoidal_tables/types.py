@@ -10,10 +10,21 @@ class Table(object):
     def __add__(self, other):
         return Table(self.columns[:] + other.columns[:])
 
-    def render(self, data, renderer=renderers.FancyRenderer):
+    def render(self, data, renderer=None):
+        """
+        This method applies the table definition to data and returns a string
+        containing the formatted table.
+
+        If the renderer is not given, it defaults to
+        ``renderers.FancyRenderer``, which creates a bordered textual table.
+
+        :param data: the input data with format suitable for use with columns
+                     in this table
+        :param renderer: the render to do the actual formatting
+        """
+        renderer = renderer or renderers.FancyRenderer
         r = renderer(self)
-        r.render(data)
-        print(r)
+        return r.render(data)
 
 
 class Column(object):

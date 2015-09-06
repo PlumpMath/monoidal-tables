@@ -17,4 +17,4 @@ if __name__ == '__main__':
         {'x': 5, 'y': 5, 'name': 'Diagonal'},
         {'x': 12, 'y': 8, 'name': 'Up'},
     ]
-    table.render(data, renderer=renderers.FancyRenderer)
+    print(table.render(data))

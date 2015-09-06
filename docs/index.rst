@@ -17,3 +17,4 @@ possible to make mistakes.
    :maxdepth: 2
 
    basics
+   api
