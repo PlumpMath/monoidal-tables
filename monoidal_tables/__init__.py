@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 from . import constants
+from . import renderers
 from . import types
 
 
@@ -99,3 +102,29 @@ def set_class(table, cls):
     :paramtype cls: string
     """
     return types.set_attr(table, constants.HTML_CLASS_KEY, cls)
+
+
+def render(renderer, table, data):
+    """
+    Render the table with the renderer and return the string representation.
+    """
+    r = renderer(table)
+    r.render(data)
+    return str(r)
+
+
+def render_text(table, data):
+    """
+    This function renders the table as bordered ASCII table and immediately
+    prints it to standard output. If you actually need to do something with the
+    text, use the ``render`` function.
+    """
+    print(render(renderers.FancyRenderer, table, data))
+
+
+def render_html(table, data):
+    """
+    This function renders the table into HTML and returns the string containing
+    the markup.
+    """
+    return render(renderers.HtmlRenderer, table, data)
